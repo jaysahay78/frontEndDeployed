@@ -26,7 +26,7 @@ import { useRouter } from "next/navigation";
   const Navbar = dynamic(() => import("@/components/Navbar"), { ssr: false });
 
 
-export default function newFeed() {
+export default function NewFeed() {
 
   const router = useRouter();
 

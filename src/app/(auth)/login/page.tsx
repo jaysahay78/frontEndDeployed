@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation"
 import UserContext from "@/context/UserContext";
 const Navbarsignup= dynamic(() => import("@/components/Navbarsignup"), { ssr: false });
 
-export default function loginPage() {
+export default function LoginPage() {
 
     const { toast } = useToast();
 
