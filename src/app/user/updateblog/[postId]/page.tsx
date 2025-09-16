@@ -32,9 +32,9 @@ export default function NewPost() {
     if (!postId) return;
   
     const id = Array.isArray(postId) ? postId[0] : postId;
-    const numericId = Number(id);
+    const numericId = String(id);
   
-    if (isNaN(numericId)) return;
+    if (numericId.length === 0) return;
   
     loadPost(numericId)
       .then((data) => {
@@ -84,8 +84,8 @@ export default function NewPost() {
   const updatePost = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const id = Array.isArray(postId) ? Number(postId[0]) : Number(postId);
-    if (isNaN(id)) {
+    const id = Array.isArray(postId) ? String(postId[0]) : String(postId);
+    if (id.length === 0) {
       toast({ variant: "error", description: "Invalid Post ID" });
       return;
     }

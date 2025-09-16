@@ -50,10 +50,10 @@ export default function NewPost() {
   const [categories, setCategories] = useState<category[]>([]);
 
   const[post, setPost] = useState({
-    userId: undefined as number | undefined,
+    userId: undefined as string | undefined,
     title: '',
     content: '',
-    categoryId: null as number | null
+    categoryId: null as string | null
   });
 
   const userData = getCurrentUserDetail();

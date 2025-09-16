@@ -1,7 +1,7 @@
 'use client';
 
 import { Footer } from "@/sections/Footer";
-import { loadAllposts } from "@/utils/post-service";
+import { loadAllPosts } from "@/utils/post-service";
 import { useEffect, useState } from "react";
 import FeedPostItem from "@/components/feedpostitem";
 import { Post } from "@/utils/post-service";
@@ -116,7 +116,7 @@ export default function NewFeed() {
     },[])
 
     const changePage = (pageNumber=0) => {
-        loadAllposts(pageNumber).then(data => {
+        loadAllPosts(pageNumber).then(data => {
             setPostContent(data)
             console.log(data)
             window.scroll(0,0)

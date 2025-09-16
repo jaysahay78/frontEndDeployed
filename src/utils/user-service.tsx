@@ -11,7 +11,7 @@ export interface UserRegisterPayload {
 
 // Define the structure for user details
 export interface User {
-    id: number;
+    id: string;
     name: string;
     email: string;
     about: string;
@@ -19,7 +19,7 @@ export interface User {
 }
 
 export interface Role{
-    id: number,
+    id: string,
     name: string,
 }
 
@@ -36,7 +36,7 @@ interface LoginDetail {
 }
 
 export interface UserUpdateProfilePayload {
-    id: number;
+    id: String;
     name: string;
     email: string;
     about: string;

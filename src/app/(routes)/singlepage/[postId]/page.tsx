@@ -68,9 +68,9 @@ export default function SinglePostPage() {
         if (!postId) return;
 
         const id = Array.isArray(postId) ? postId[0] : postId;
-        const numericId = Number(id);
+        const numericId = String(id);
       
-        if (isNaN(numericId)) return;
+        if (numericId.length === 0) return;
 
         loadPost(numericId).then(data=>{
             console.log(data);

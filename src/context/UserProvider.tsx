@@ -11,7 +11,7 @@ interface UserProviderProps {
 
 function UserProvider({ children }: UserProviderProps) {
     const [user, setUser] = useState<User | null>({
-            id: 0, // Default values
+            id: "", // Default values
             name: "",
             email: "",
             about: "",
