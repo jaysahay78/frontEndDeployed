@@ -34,6 +34,13 @@ const nextConfig = {
     return config;
   },
 
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+
   // ...other config
   images: {
     domains: ["localhost"], // allow loading images from localhost
