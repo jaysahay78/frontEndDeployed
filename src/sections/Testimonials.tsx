@@ -25,8 +25,8 @@ const testimonials: Testimonial[] = [
   {
     text: "As a writer, I’ve tried countless platforms — but this one finally feels like home. Clean design, great tools, and a community that actually reads.",
     imageSrc: avatar1.src,
-    name: "Shree Patil",
-    username: "@shreeeee",
+    name: "Arpitha Maralli",
+    username: "@arpithaAM",
   },
   {
     text: "Since switching to this blog app, our content strategy has improved dramatically. Posting, editing, and engaging feels effortless.",
