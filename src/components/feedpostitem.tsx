@@ -33,7 +33,7 @@ export default function FeedPostItem({ post, highlight }: FeedPostItemProps) {
     );
   };
 
-    const previewText = stripHtmlTags(post.content).substring(0, 60);
+    const previewText = stripHtmlTags(post?.content).substring(0, 60);
 
     return (
         <div className="flex flex-col md:flex-row gap-6 py-6 border-b border-gray-300">
@@ -53,13 +53,13 @@ export default function FeedPostItem({ post, highlight }: FeedPostItemProps) {
             {/* Post Details */}
             <div className="flex flex-col gap-3 justify-center">
                 <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
-                {highlightText(post.title)}
+                {highlightText(post?.title)}
                 </h1>
                 <div className="text-sm text-gray-500">
-                    Written by <span className="text-blue-600">{post.user.name}</span> · {timeAgo(post.addedDate)} 
+                    Written by <span className="text-blue-600">{post?.user.name}</span> · {timeAgo(post.addedDate)} 
                 </div>
                 <p className="text-gray-700 text-sm">{previewText}...</p>
-                <Link href={`/singlepage/`+post.postId} className="text-blue-600 text-sm font-medium w-fit hover:underline">
+                <Link href={`/singlepage/`+post?.postId} className="text-blue-600 text-sm font-medium w-fit hover:underline">
                     read more
                 </Link>
             </div>
