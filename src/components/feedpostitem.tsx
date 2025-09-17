@@ -3,8 +3,10 @@ import Image from "next/image";
 import { formatDistanceToNow } from 'date-fns';
 import Link from "next/link";
 
-function timeAgo(timestamp: number): string {
-  return formatDistanceToNow(new Date(timestamp), { addSuffix: true });
+function timeAgo(timestamp: number | string): string {
+  const date = new Date(timestamp);
+  if (isNaN(date.getTime())) return "Unknown time";
+  return formatDistanceToNow(date, { addSuffix: true });
 }
 
 
@@ -54,7 +56,7 @@ export default function FeedPostItem({ post, highlight }: FeedPostItemProps) {
                 {highlightText(post.title)}
                 </h1>
                 <div className="text-sm text-gray-500">
-                    Written by <span className="text-blue-600">{post.user.name}</span> · {timeAgo(post.addeddate)} 
+                    Written by <span className="text-blue-600">{post.user.name}</span> · {timeAgo(post.addedDate)} 
                 </div>
                 <p className="text-gray-700 text-sm">{previewText}...</p>
                 <Link href={`/singlepage/`+post.postId} className="text-blue-600 text-sm font-medium w-fit hover:underline">

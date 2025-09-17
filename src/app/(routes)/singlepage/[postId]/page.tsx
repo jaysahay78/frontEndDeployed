@@ -51,7 +51,7 @@ export default function SinglePostPage() {
             prevPost
               ? {
                   ...prevPost,
-                  comment: [...(prevPost.comment || []), data],
+                  comment: [...(prevPost.comments || []), data],
                 }
               : prevPost
           );
@@ -100,8 +100,8 @@ export default function SinglePostPage() {
                 <span>written by </span>
                 <span className="font-bold">{post?.user.name} </span>
                 <span>on </span>
-                <span className="font-semibold"> {post?.addeddate && !isNaN(new Date(post.addeddate).getTime())
-    ? new Date(post.addeddate).toLocaleDateString() : "Unknown date"}</span>
+                <span className="font-semibold"> {post?.addedDate && !isNaN(new Date(post.addedDate).getTime())
+    ? new Date(post.addedDate).toLocaleDateString() : "Unknown date"}</span>
                 <div className="mt-2">
                     <span> {post?.category.categoryTitle}</span>
                 </div>
@@ -149,7 +149,7 @@ export default function SinglePostPage() {
                             <button className="btn btn-primary bg-black px-4 py-3 font-normal rounded-xl"
                             onClick={submitPost}>send</button>
                         </div>
-                        {post && post?.comment?.map((c)=>(
+                        {post && post?.comments?.map((c)=>(
                         <div key={c.id} className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm flex gap-3 mt-4 mb-8">
                         <div className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center text-white font-bold">
                           {c.user.name.charAt(0).toUpperCase()}
@@ -157,7 +157,7 @@ export default function SinglePostPage() {
                         <div className="flex-1">
                           <div className="flex items-center justify-between text-sm text-gray-600">
                             <span className="font-semibold text-gray-800">{c.user.name}</span>
-                            <span> {timeAgo(c.addeddate)}</span>
+                            <span> {timeAgo(c.addedDate)}</span>
                           </div>
                           <p className="mt-1 text-gray-800 leading-relaxed">{c.content}</p>
                         </div>

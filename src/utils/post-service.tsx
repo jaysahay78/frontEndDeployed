@@ -7,14 +7,14 @@ export interface Post {
   title: string;
   content: string;
   imageName: string;
-  addeddate: string;  // Mongo usually stores ISO string dates
+  addedDate: string;  // Mongo usually stores ISO string dates
   user: User;
   category: {
     categoryId: string;   // Changed from number → string
     categoryTitle: string;
     categoryDescription: string;
   };
-  comment: any[]; // You can define proper Comment type later
+  comments: any[]; // You can define proper Comment type later
 }
 
 // ✅ Create Post

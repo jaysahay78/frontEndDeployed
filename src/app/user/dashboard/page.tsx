@@ -132,7 +132,7 @@ function stripHtmlTags(html: string): string {
                           </div>
                           <div className="flex items-center mt-2 text-sm text-muted-foreground">
                             <Calendar className="mr-1 h-4 w-4" />
-                            {post?.addeddate ? new Date(post.addeddate).toLocaleDateString() : "Unknown date"}
+                            {post?.addedDate ? new Date(post.addedDate).toLocaleDateString() : "Unknown date"}
                           </div>
                           <p className="mt-2 text-sm text-muted-foreground line-clamp-2">
                           {stripHtmlTags(post.content).substring(0, 60)}...
