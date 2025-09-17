@@ -16,8 +16,10 @@ import { formatDistanceToNow } from 'date-fns';
 const NavbarAuth = dynamic(() => import("@/components/Navbarauth"), { ssr: false });
 const Navbar = dynamic(() => import("@/components/Navbar"), { ssr: false });
 
-function timeAgo(timestamp: number): string {
-  return formatDistanceToNow(new Date(timestamp), { addSuffix: true });
+function timeAgo(timestamp: number | string): string {
+  const date = new Date(timestamp);
+  if (isNaN(date.getTime())) return "Unknown time";
+  return formatDistanceToNow(date, { addSuffix: true });
 }
 
 export default function SinglePostPage() {
@@ -98,7 +100,8 @@ export default function SinglePostPage() {
                 <span>written by </span>
                 <span className="font-bold">{post?.user.name} </span>
                 <span>on </span>
-                <span className="font-semibold"> {post?.addeddate ? new Date(post.addeddate).toLocaleDateString() : "Unknown date"}</span>
+                <span className="font-semibold"> {post?.addeddate && !isNaN(new Date(post.addeddate).getTime())
+    ? new Date(post.addeddate).toLocaleDateString() : "Unknown date"}</span>
                 <div className="mt-2">
                     <span> {post?.category.categoryTitle}</span>
                 </div>
