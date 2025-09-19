@@ -37,19 +37,6 @@ export default function FeedPostItem({ post, highlight }: FeedPostItemProps) {
 
     return (
         <div className="flex flex-col md:flex-row gap-6 py-6 border-b border-gray-300">
-            {post?.imageName !== "default.png" && (
-                          <div className="image-container pt-2">
-                            <Image
-                              src={`${process.env.NEXT_PUBLIC_BASE_URL}/posts/image/${post?.imageName}`}
-                              alt="post image"
-                              className="rounded-2xl shadow-[1px_4px_27px_-13px_#000000] scale-90"
-                              height={225}
-                              width={400}
-                              unoptimized
-                            />
-                          </div>
-                        )}
-
             {/* Post Details */}
             <div className="flex flex-col gap-3 justify-center">
                 <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
