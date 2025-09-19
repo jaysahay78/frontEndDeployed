@@ -27,6 +27,7 @@ export default function SinglePostPage() {
   const { postId } = useParams();
   const [post, setPost] = useState<Post>();
   const [comment, setComment] = useState<{ content: string }>({ content: "" });
+  const [unsplashImage, setUnsplashImage] = useState<string | null>(null);
 
   const submitPost = () => {
     if (!post?.postId || !userDetail?.id || !comment?.content.trim()) {
@@ -62,31 +63,40 @@ export default function SinglePostPage() {
       });
   };
 
+  // Load post data
   useEffect(() => {
     if (!postId) return;
     const id = Array.isArray(postId) ? postId[0] : postId;
-    const numericId = String(id);
+    if (!id) return;
 
-    if (numericId.length === 0) return;
-
-    loadPost(numericId)
+    loadPost(String(id))
       .then((data) => {
         setPost(data);
+
+        // 🔥 Fetch Unsplash image using title as query
+        if (data?.title) {
+          fetch(
+            `https://api.unsplash.com/search/photos?query=${encodeURIComponent(
+              data.title
+            )}&client_id=${process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY}`
+          )
+            .then((res) => res.json())
+            .then((json) => {
+              const url = json?.results?.[0]?.urls?.regular;
+              if (url) setUnsplashImage(url);
+              else setUnsplashImage("/fallback.jpg"); // fallback image
+            })
+            .catch(() => setUnsplashImage("/fallback.jpg"));
+        }
       })
       .catch((error) => {
         console.log(error);
         toast({
           variant: "error",
-          description: "error in loading post",
+          description: "Error in loading post",
         });
       });
-  }, []);
-
-  // ✅ Generate image URL dynamically (Unsplash with query from post title)
-  const generateImageUrl = (title?: string) => {
-    if (!title) return "https://picsum.photos/900/500"; // fallback
-    return `https://source.unsplash.com/900x500/?${encodeURIComponent(title)}`;
-  };
+  }, [postId]);
 
   return (
     <div className="min-h-screen flex flex-col overflow-x-clip">
@@ -104,27 +114,30 @@ export default function SinglePostPage() {
                 <span className="font-bold">{post?.user.name} </span>
                 <span>on </span>
                 <span className="font-semibold">
-                  {post?.addedDate && !isNaN(new Date(post.addedDate).getTime())
+                  {post?.addedDate &&
+                  !isNaN(new Date(post.addedDate).getTime())
                     ? new Date(post.addedDate).toLocaleDateString()
                     : "Unknown date"}
                 </span>
                 <div className="mt-2">
-                  <span>{post?.category.categoryTitle}</span>
+                  <span> {post?.category.categoryTitle}</span>
                 </div>
               </div>
             </div>
 
-            {/* ✅ Show AI-generated image instead of backend one */}
-            <div className="image-container pt-6">
-              <Image
-                src={generateImageUrl(post?.title)}
-                alt="post generated image"
-                className="rounded-2xl shadow-[1px_4px_27px_-13px_#000000] scale-95"
-                height={506}
-                width={900}
-                unoptimized
-              />
-            </div>
+            {/* Show Unsplash or fallback image */}
+            {unsplashImage && (
+              <div className="image-container pt-2">
+                <Image
+                  src={unsplashImage}
+                  alt={post?.title || "Post image"}
+                  className="rounded-2xl shadow-[1px_4px_27px_-13px_#000000] scale-90"
+                  height={506}
+                  width={900}
+                  unoptimized
+                />
+              </div>
+            )}
 
             <div className="mt-5">
               <PostContent content={post?.content || ""} />
@@ -146,7 +159,7 @@ export default function SinglePostPage() {
       </div>
 
       {/* Comment section */}
-      <div className="mt-5 px-4 gap-10 lg:w-3/5 ml-24">
+      <div className="mt-5 px-4 gap-10 lg:w-3/5 ml-24 ">
         <div className="flex flex-col gap-8 lg:w-3/5">
           <h1>Comments</h1>
         </div>
