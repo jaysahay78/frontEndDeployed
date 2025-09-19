@@ -11,6 +11,7 @@ import dynamic from "next/dynamic";
 import { getCurrentUserDetail, isLoggedIn } from "@/app/(auth)";
 import PostContent from "@/lib/PostContent";
 import { formatDistanceToNow } from "date-fns";
+import { createClient } from "pexels"; // ✅ Pexels SDK
 
 const NavbarAuth = dynamic(() => import("@/components/Navbarauth"), { ssr: false });
 const Navbar = dynamic(() => import("@/components/Navbar"), { ssr: false });
@@ -21,13 +22,16 @@ function timeAgo(timestamp: number | string): string {
   return formatDistanceToNow(date, { addSuffix: true });
 }
 
+// ✅ Init Pexels client
+const pexelsClient = createClient(process.env.NEXT_PUBLIC_PEXELS_API_KEY as string);
+
 export default function SinglePostPage() {
   const loggedIn = isLoggedIn();
   const userDetail = getCurrentUserDetail();
   const { postId } = useParams();
   const [post, setPost] = useState<Post>();
   const [comment, setComment] = useState<{ content: string }>({ content: "" });
-  const [unsplashImage, setUnsplashImage] = useState<string | null>(null);
+  const [pexelsImage, setPexelsImage] = useState<string | null>(null);
 
   const submitPost = () => {
     if (!post?.postId || !userDetail?.id || !comment?.content.trim()) {
@@ -63,7 +67,7 @@ export default function SinglePostPage() {
       });
   };
 
-  // Load post data
+  // Load post + fetch image
   useEffect(() => {
     if (!postId) return;
     const id = Array.isArray(postId) ? postId[0] : postId;
@@ -73,20 +77,16 @@ export default function SinglePostPage() {
       .then((data) => {
         setPost(data);
 
-        // 🔥 Fetch Unsplash image using title as query
+        // 🔥 Fetch from Pexels using post title as query
         if (data?.title) {
-          fetch(
-            `https://api.unsplash.com/search/photos?query=${encodeURIComponent(
-              data.title
-            )}&client_id=${process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY}`
-          )
-            .then((res) => res.json())
-            .then((json) => {
-              const url = json?.results?.[0]?.urls?.regular;
-              if (url) setUnsplashImage(url);
-              else setUnsplashImage("/fallback.jpg"); // fallback image
+          pexelsClient.photos
+            .search({ query: data.title, per_page: 1 })
+            .then((res) => {
+              const url = "photos" in res ? res.photos?.[0]?.src?.large : null;
+              if (url) setPexelsImage(url);
+              else setPexelsImage("/fallback.jpg");
             })
-            .catch(() => setUnsplashImage("/fallback.jpg"));
+            .catch(() => setPexelsImage("/fallback.jpg"));
         }
       })
       .catch((error) => {
@@ -125,11 +125,11 @@ export default function SinglePostPage() {
               </div>
             </div>
 
-            {/* Show Unsplash or fallback image */}
-            {unsplashImage && (
+            {/* Show Pexels or fallback image */}
+            {pexelsImage && (
               <div className="image-container pt-2">
                 <Image
-                  src={unsplashImage}
+                  src={pexelsImage}
                   alt={post?.title || "Post image"}
                   className="rounded-2xl shadow-[1px_4px_27px_-13px_#000000] scale-90"
                   height={506}
