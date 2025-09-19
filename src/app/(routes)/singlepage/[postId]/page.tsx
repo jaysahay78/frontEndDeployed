@@ -11,7 +11,7 @@ import dynamic from "next/dynamic";
 import { getCurrentUserDetail, isLoggedIn } from "@/app/(auth)";
 import PostContent from "@/lib/PostContent";
 import { formatDistanceToNow } from "date-fns";
-import { createClient } from "pexels"; // ✅ Pexels SDK
+import { createClient } from "pexels";
 
 const NavbarAuth = dynamic(() => import("@/components/Navbarauth"), { ssr: false });
 const Navbar = dynamic(() => import("@/components/Navbar"), { ssr: false });
