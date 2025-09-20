@@ -1,7 +1,7 @@
 "use client";
 import ArrowIcon from "@/assets/arrow-right.svg";
 import cogImage from "@/assets/cog.png";
-import Image from "next/image";
+import BlurText from "@/components/BlurText";
 import cylinderImage from "@/assets/cylinder.png";
 import noodleImage from "@/assets/noodle.png";
 import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
@@ -14,7 +14,10 @@ export const Hero = () => {
     offset: ["start end", "end start"],
   });
 
-const translateY = useTransform(scrollYProgress, [0,1], [150, -150]);
+const handleAnimationComplete = () => {
+  console.log('Animation completed!');
+};
+
 
 
   return (
@@ -25,7 +28,12 @@ const translateY = useTransform(scrollYProgress, [0,1], [150, -150]);
             <div className="tag">
             Try Version 1.0!</div>
             <h1 className="text-5xl md:text-7xl font-bold tracking-tighter bg-gradient-to-b from-black to-[#001E80] text-transparent bg-clip-text mt-6">
-            <span className="block">Discover Ideas.</span>
+            <BlurText
+              text="Isn't this so cool?!"
+              delay={150}
+              animateBy="words"
+              direction="top"
+              onAnimationComplete={handleAnimationComplete}/>
             <span className="block">Share Stories.</span>
             <span className="block">Fuel Your Mind.</span>
             </h1>

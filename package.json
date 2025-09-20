@@ -49,6 +49,7 @@
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.484.0",
     "marked": "^15.0.8",
+    "motion": "^12.23.16",
     "next": "^15.3.1",
     "next-auth": "^4.24.11",
     "novel": "^1.0.2",
