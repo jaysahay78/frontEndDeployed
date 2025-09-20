@@ -14,10 +14,6 @@ export const Hero = () => {
     offset: ["start end", "end start"],
   });
 
-const handleAnimationComplete = () => {
-  console.log('Animation completed!');
-};
-
 
 
   return (
@@ -27,16 +23,17 @@ const handleAnimationComplete = () => {
           <div className="md:w-[478px]">
             <div className="tag">
             Try Version 1.0!</div>
-            <h1 className="text-5xl md:text-7xl font-bold tracking-tighter bg-gradient-to-b from-black to-[#001E80] text-transparent bg-clip-text mt-6">
-            <BlurText
-              text="Isn't this so cool?!"
-              delay={150}
+            <h1 >
+              <BlurText
+              text="Discover Ideas.
+              Share Thoughts.
+              Fuel Your Mind."
+              delay={200}
               animateBy="words"
               direction="top"
-              onAnimationComplete={handleAnimationComplete}/>
-            <span className="block">Share Stories.</span>
-            <span className="block">Fuel Your Mind.</span>
+              className="text-5xl md:text-7xl font-bold tracking-tighter mt-6"/>
             </h1>
+            
 
             <p className="text-xl text-[#010D3E] tracking-tight mt-6">Welcome to your new favorite corner of the 
               internet — where writers, thinkers, and curious minds come together. From personal reflections to deep dives on tech, culture, and creativity — this is blogging, reimagined.

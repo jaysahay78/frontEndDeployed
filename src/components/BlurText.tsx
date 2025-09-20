@@ -110,6 +110,7 @@ const BlurText: React.FC<BlurTextProps> = ({
               display: 'inline-block',
               willChange: 'transform, filter, opacity'
             }}
+            className='bg-gradient-to-b from-black to-[#001E80] text-transparent bg-clip-text'
           >
             {segment === ' ' ? '\u00A0' : segment}
             {animateBy === 'words' && index < elements.length - 1 && '\u00A0'}
